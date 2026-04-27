@@ -5,35 +5,38 @@ import MySafeFoods from "./pages/MySafeFoods";
 import MyTriggers from "./pages/MyTriggers";
 import About from "./pages/About";
 import ProductDetail from "./pages/ProductDetail";
+import Layout from "./components/Layout";
 
 function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={<Home />}
-        />
-        <Route
-          path="/search"
-          element={<Search />}
-        />
-        <Route
-          path="/my-safe-foods"
-          element={<MySafeFoods />}
-        />
-        <Route
-          path="/my-triggers"
-          element={<MyTriggers />}
-        />
-        <Route
-          path="/about"
-          element={<About />}
-        />
-        <Route
-          path="/product/:id"
-          element={<ProductDetail />}
-        />
+        <Route element={<Layout />}>
+          <Route
+            path="/"
+            element={<Home />}
+          />
+          <Route
+            path="/search"
+            element={<Search />}
+          />
+          <Route
+            path="/my-safe-foods"
+            element={<MySafeFoods />}
+          />
+          <Route
+            path="/my-triggers"
+            element={<MyTriggers />}
+          />
+          <Route
+            path="/about"
+            element={<About />}
+          />
+          <Route
+            path="/product/:id"
+            element={<ProductDetail />}
+          />
+        </Route>
       </Routes>
     </BrowserRouter>
   );
