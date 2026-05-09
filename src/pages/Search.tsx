@@ -1,14 +1,6 @@
 import { useState } from "react";
-
-type Product = {
-  code: string;
-  product_name?: string;
-  brands?: string;
-  ingredients_text?: string;
-  ingredients_text_de?: string;
-  ingredients_tags?: string[];
-  image_front_url?: string;
-};
+import { type Product } from "../types";
+import ProductCard from "../components/ProductCard";
 
 export default function Search() {
   const [searchQuery, setSearchQuery] = useState<string>("");
@@ -53,9 +45,10 @@ export default function Search() {
       {isLoading && <p>Loading...</p>}
       {error !== null && <p>Something went wrong</p>}
       {results.map((product) => (
-        <div key={product.code}>
-          <p>{product.product_name}</p>
-        </div>
+        <ProductCard
+          key={product.code}
+          product={product}
+        />
       ))}
     </div>
   );
