@@ -9,7 +9,18 @@ function getSafetyLevel(product: Product): "safe" | "caution" | "risky" {
   const hasTrigger = triggers.some((trigger) =>
     product.ingredients_text?.includes(trigger),
   );
-  return "risky";
+  if (hasTrigger) {
+    return "risky";
+  }
+  if (
+    product.nutrient_levels?.fat === "high" ||
+    product.nutrient_levels?.salt === "high" ||
+    product.nutrient_levels?.sugars === "high" ||
+    product.nutrient_levels?.["saturated-fat"] === "high"
+  ) {
+    return "caution";
+  }
+  return "safe";
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
