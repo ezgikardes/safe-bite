@@ -14,7 +14,7 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   function getSafetyLevel(product: Product): "safe" | "caution" | "risky" {
     const hasTrigger = triggers.some((trigger) =>
-      product.ingredients_text_en?.includes(trigger.toLowerCase()),
+      product.ingredients_text_en?.toLowerCase().includes(trigger),
     );
     if (hasTrigger) {
       return "risky";
