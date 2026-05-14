@@ -5,7 +5,7 @@ export type Product = {
   product_name?: string;
   brands?: string;
   ingredients_text?: string;
-  ingredients_text_de?: string;
+  ingredients_text_en?: string;
   ingredients_tags?: string[];
   image_front_url?: string;
   nutrient_levels?: {

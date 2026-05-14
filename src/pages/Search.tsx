@@ -9,7 +9,7 @@ export default function Search() {
   const [error, setError] = useState<string | null>(null);
 
   const searchProductsByName = async (query: string) => {
-    const url = `/search-api/search?q=${encodeURIComponent(query)}`;
+    const url = `/api/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&fields=code,product_name,brands,image_front_url,ingredients_text_en,nutrient_levels`;
     const res = await fetch(url);
     if (!res.ok) {
       throw new Error("Ürünler alınamadı");
@@ -25,7 +25,7 @@ export default function Search() {
     setError(null);
     try {
       const result = await searchProductsByName(searchQuery);
-      setResults(result.hits);
+      setResults(result.products ?? []);
     } catch (err) {
       setError("Product cannot be found");
       setResults([]);

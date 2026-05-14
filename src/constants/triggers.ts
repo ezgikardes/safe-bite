@@ -1,1 +1,8 @@
-export const triggers = ["tomato", "lemon", "orange", "coffee", "chocolate"];
+export const triggers = [
+  "tomato",
+  "lemon",
+  "orange",
+  "coffee",
+  "chocolate",
+  "cocoa",
+];

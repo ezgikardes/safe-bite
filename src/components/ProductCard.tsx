@@ -5,31 +5,41 @@ type ProductCardProps = {
   product: Product;
 };
 
-function getSafetyLevel(product: Product): "safe" | "caution" | "risky" {
-  const hasTrigger = triggers.some((trigger) =>
-    product.ingredients_text?.includes(trigger),
-  );
-  if (hasTrigger) {
-    return "risky";
-  }
-  if (
-    product.nutrient_levels?.fat === "high" ||
-    product.nutrient_levels?.salt === "high" ||
-    product.nutrient_levels?.sugars === "high" ||
-    product.nutrient_levels?.["saturated-fat"] === "high"
-  ) {
-    return "caution";
-  }
-  return "safe";
-}
-
 export default function ProductCard({ product }: ProductCardProps) {
+  const emojiMap = {
+    safe: "🟢 Safe",
+    caution: "🟡 Caution",
+    risky: "🔴 Risky",
+  };
+
+  function getSafetyLevel(product: Product): "safe" | "caution" | "risky" {
+    const hasTrigger = triggers.some((trigger) =>
+      product.ingredients_text_en?.includes(trigger.toLowerCase()),
+    );
+    if (hasTrigger) {
+      return "risky";
+    }
+    if (
+      product.nutrient_levels?.fat === "high" ||
+      product.nutrient_levels?.salt === "high" ||
+      product.nutrient_levels?.sugars === "high" ||
+      product.nutrient_levels?.["saturated-fat"] === "high"
+    ) {
+      return "caution";
+    }
+    return "safe";
+  }
+
   return (
     <div>
       <img src={product.image_front_url} />
       <p>{product.product_name}</p>
       <p>{product.brands}</p>
-      <p>safety</p>
+      <p>
+        {product.ingredients_text_en
+          ? emojiMap[getSafetyLevel(product)]
+          : "⚠️  Ingredients unknown"}
+      </p>
     </div>
   );
 }
