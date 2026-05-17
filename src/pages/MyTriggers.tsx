@@ -24,6 +24,19 @@ export default function MyTriggers() {
     setSavedTriggers(savedTriggers.filter((t) => t !== trigger));
   }
 
-  return;
-  <></>;
+  return (
+    <>
+      <input
+        value={newTrigger}
+        onChange={(e) => setNewTrigger(e.target.value)}
+      />
+      <button onClick={addTrigger}>Ekle</button>
+      {savedTriggers.map((t) => (
+        <div key={t}>
+          <p>{t}</p>
+          <button onClick={() => removeTrigger(t)}>x</button>
+        </div>
+      ))}
+    </>
+  );
 }
