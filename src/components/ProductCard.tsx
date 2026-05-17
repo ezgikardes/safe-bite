@@ -13,7 +13,13 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   function getSafetyLevel(product: Product): "safe" | "caution" | "risky" {
-    const hasTrigger = triggers.some((trigger) =>
+    const customTriggers: string[] = JSON.parse(
+      localStorage.getItem("myTriggers") ?? "[]",
+    );
+
+    const allTriggers = [...triggers, ...customTriggers];
+
+    const hasTrigger = allTriggers.some((trigger) =>
       product.ingredients_text_en?.toLowerCase().includes(trigger),
     );
     if (hasTrigger) {
