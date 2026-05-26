@@ -16,6 +16,13 @@ export default function ProductDetail() {
     product?.ingredients_text_en?.toLowerCase().includes(trigger),
   );
 
+  let highNutrients: [string, string][] = [];
+  if (product?.nutrient_levels) {
+    highNutrients = Object.entries(product.nutrient_levels).filter(
+      ([name, value]) => value === "high",
+    );
+  }
+
   useEffect(() => {
     async function fetchProduct() {
       const res = await fetch(`/api/api/v2/product/${id}`);
@@ -37,6 +44,11 @@ export default function ProductDetail() {
           {product.ingredients_text_en && (
             <p> This product contains: {foundTriggers.join(", ")} </p>
           )}
+          {highNutrients.map(([name]) => (
+            <p key={name}>
+              You must be cautious because this product contains high {name}
+            </p>
+          ))}
         </div>
       )}
     </>
