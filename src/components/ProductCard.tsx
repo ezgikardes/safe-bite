@@ -1,5 +1,6 @@
 import type { Product } from "../types";
 import { triggers } from "../constants/triggers";
+import { Link } from "react-router-dom";
 
 type ProductCardProps = {
   product: Product;
@@ -37,7 +38,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   }
 
   return (
-    <div>
+    <Link to={`/product/${product.code}`}>
       <img src={product.image_front_url} />
       <p>{product.product_name}</p>
       <p>{product.brands}</p>
@@ -46,6 +47,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           ? emojiMap[getSafetyLevel(product)]
           : "⚠️  Ingredients unknown"}
       </p>
-    </div>
+    </Link>
   );
 }
