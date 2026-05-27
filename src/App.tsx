@@ -1,11 +1,11 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
-import MySafeFoods from "./pages/MySafeFoods";
 import MyTriggers from "./pages/MyTriggers";
 import About from "./pages/About";
 import ProductDetail from "./pages/ProductDetail";
 import Layout from "./components/Layout";
+import MyFavoriteProducts from "./pages/MyFavoriteProducts";
 
 function App() {
   return (
@@ -21,8 +21,8 @@ function App() {
             element={<Search />}
           />
           <Route
-            path="/my-safe-foods"
-            element={<MySafeFoods />}
+            path="/my-favorite-products"
+            element={<MyFavoriteProducts />}
           />
           <Route
             path="/my-triggers"
