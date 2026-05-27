@@ -42,13 +42,18 @@ export default function ProductDetail() {
           <p>{product.product_name}</p>
           <p>{product.brands}</p>
           {product.ingredients_text_en && (
-            <p> This product contains: {foundTriggers.join(", ")} </p>
-          )}
-          {highNutrients.map(([name]) => (
-            <p key={name}>
-              You must be cautious because this product contains high {name}
+            <p>
+              {" "}
+              This product is risky for you because it contains{" "}
+              {foundTriggers.join(", ")}{" "}
             </p>
-          ))}
+          )}
+          {highNutrients.length > 0 && (
+            <p>
+              You must be cautious because this product contains high
+              {highNutrients.map(([name]) => name).join(", ")}
+            </p>
+          )}
         </div>
       )}
     </>
