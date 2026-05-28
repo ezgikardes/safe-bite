@@ -5,9 +5,8 @@ export default function Sidebar() {
     <aside>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/search">Search</NavLink>
-      <NavLink to="/my-safe-foods">My Safe Foods</NavLink>
+      <NavLink to="/my-favorite-products">My Favorite Products</NavLink>
       <NavLink to="/my-triggers">My Triggers</NavLink>
-      <NavLink to="/about">About</NavLink>
     </aside>
   );
 }

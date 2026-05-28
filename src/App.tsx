@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Search from "./pages/Search";
 import MyTriggers from "./pages/MyTriggers";
-import About from "./pages/About";
 import ProductDetail from "./pages/ProductDetail";
 import Layout from "./components/Layout";
 import MyFavoriteProducts from "./pages/MyFavoriteProducts";
@@ -27,10 +26,6 @@ function App() {
           <Route
             path="/my-triggers"
             element={<MyTriggers />}
-          />
-          <Route
-            path="/about"
-            element={<About />}
           />
           <Route
             path="/product/:id"
