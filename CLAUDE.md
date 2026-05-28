@@ -19,14 +19,14 @@ npm run preview   # Preview production build
 
 All routes are wrapped by a single `Layout` component (`src/components/Layout.tsx`) which renders `Header`, `Sidebar`, and `<Outlet />`. Routes are defined in `src/App.tsx`:
 
-| Path | Page |
-|---|---|
-| `/` | Home |
-| `/search` | Search products |
-| `/my-safe-foods` | Saved safe foods |
-| `/my-triggers` | Personal trigger ingredients |
-| `/about` | About |
-| `/product/:id` | Product detail |
+| Path                    | Page                         |
+| ----------------------- | ---------------------------- |
+| `/`                     | Home                         |
+| `/search`               | Search products              |
+| `/my-favorite-products` | Saved favorite products      |
+| `/my-triggers`          | Personal trigger ingredients |
+| `/about`                | About                        |
+| `/product/:id`          | Product detail               |
 
 ### API Integration (Open Food Facts)
 
@@ -38,5 +38,4 @@ Two Vite dev proxy rules handle CORS — never call these domains directly from 
 ### Key Dependencies
 
 - **React Router v7** — client-side routing
-- **TanStack Query v5** — installed but not yet wired up; intended for server state / caching API responses
 - **Tailwind CSS v4** — via `@tailwindcss/vite` plugin (configured in `vite.config.ts`, not `postcss.config`)
