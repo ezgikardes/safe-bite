@@ -30,7 +30,7 @@ export default function MyTriggers() {
   }
 
   return (
-    <div className="space-y-5 max-w-lg">
+    <div className="space-y-5">
       {/* Page header with title and description */}
       <div>
         <h1 className="text-xl font-bold text-text">My Triggers</h1>

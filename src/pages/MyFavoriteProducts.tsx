@@ -9,7 +9,7 @@ export default function MyFavoriteProducts() {
   );
 
   return (
-    <div className="space-y-5 max-w-4xl">
+    <div className="space-y-5">
       <div>
         <h1 className="text-xl font-bold text-text">Favorites</h1>
         <p className="mt-1 text-sm text-text-secondary">
