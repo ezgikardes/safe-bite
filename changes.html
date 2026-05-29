@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Değişiklik Özeti – safe-bite</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 860px; margin: 40px auto; padding: 0 24px; color: #111; line-height: 1.6; }
+    h1 { font-size: 1.5rem; border-bottom: 2px solid #2D6A4F; padding-bottom: 8px; }
+    h2 { font-size: 1.1rem; margin-top: 2rem; color: #2D6A4F; }
+    h3 { font-size: 0.95rem; margin-top: 1.5rem; margin-bottom: 4px; }
+    p, li { font-size: 0.9rem; }
+    ul { padding-left: 1.4rem; }
+    .file { background: #f5f5f5; border-left: 4px solid #2D6A4F; padding: 12px 16px; border-radius: 0 8px 8px 0; margin-top: 1rem; }
+    .file code { font-size: 0.85rem; background: #e8e8e8; padding: 1px 5px; border-radius: 3px; }
+    .tag-logic { display: inline-block; background: #FEF9C3; color: #854D0E; font-size: 0.75rem; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+    .tag-ui { display: inline-block; background: #DCFCE7; color: #166534; font-size: 0.75rem; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+    .tag-new { display: inline-block; background: #DBEAFE; color: #1E40AF; font-size: 0.75rem; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+    .tag-fix { display: inline-block; background: #FEE2E2; color: #991B1B; font-size: 0.75rem; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+    .legend { display: flex; gap: 12px; margin-bottom: 1rem; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+<h1>Remote ile Local Arasındaki Değişiklikler</h1>
+
+<div class="legend">
+  <span><span class="tag-ui">UI</span> Görsel değişiklik – mantık aynı</span>
+  <span><span class="tag-logic">MANTIK</span> Davranış değişikliği</span>
+  <span><span class="tag-new">YENİ</span> Hiç olmayan dosya/özellik</span>
+  <span><span class="tag-fix">FİX</span> Hata düzeltmesi</span>
+</div>
+
+<!-- ─── index.css ─── -->
+<div class="file">
+  <h2>📄 src/index.css <span class="tag-ui">UI</span></h2>
+  <p><strong>Önce:</strong> Sadece <code>@import "tailwindcss";</code> vardı. Tailwind aktif ama hiçbir renk tanımlanmamıştı.</p>
+  <p><strong>Sonra:</strong> <code>@theme { ... }</code> bloğu eklendi. Bu blok, projenin her yerinde kullanılacak renk ve yazı tipi isimlerini tanımlıyor.</p>
+  <ul>
+    <li><code>--color-primary</code> → yeşil (#2D6A4F). Buton, aktif link gibi yerlerde kullanılıyor.</li>
+    <li><code>--color-background</code>, <code>--color-surface</code>, <code>--color-border</code> → sayfa arka planı, kart arka planı, çizgi renkleri.</li>
+    <li><code>--color-text</code>, <code>--color-text-secondary</code>, <code>--color-text-muted</code> → üç farklı yazı rengi tonu.</li>
+    <li><code>--shadow-card</code> → kartların hafif gölgesi.</li>
+  </ul>
+  <p>Bu değişkenler sayesinde <code>bg-primary</code>, <code>text-text-secondary</code> gibi Tailwind class'larını her dosyada kullanabiliyorsun.</p>
+</div>
+
+<!-- ─── vite.config.ts ─── -->
+<div class="file">
+  <h2>⚙️ vite.config.ts <span class="tag-fix">FİX</span></h2>
+  <p><strong>Önce:</strong> <code>plugins: [react()]</code> – Tailwind import edilmiş ama <code>plugins</code> dizisine eklenmemişti. Bu yüzden <code>@theme</code> bloğundaki renkler tanımlansa bile Tailwind class'ları üretilmiyordu.</p>
+  <p><strong>Sonra:</strong> <code>plugins: [react(), tailwindcss()]</code> – Tailwind artık Vite'ın build sürecine dahil.</p>
+</div>
+
+<!-- ─── package.json ─── -->
+<div class="file">
+  <h2>📦 package.json <span class="tag-new">YENİ</span></h2>
+  <p><code>lucide-react</code> paketi eklendi. Bu paket, bileşenlerde kullandığın ikonları sağlıyor (arama ikonu, çan, kalp, uyarı üçgeni gibi). Kullanımı şöyle:</p>
+  <pre><code>import { Search } from "lucide-react";
+&lt;Search className="size-4" /&gt;</code></pre>
+</div>
+
+<!-- ─── Layout.tsx ─── -->
+<div class="file">
+  <h2>🧱 src/components/Layout.tsx <span class="tag-ui">UI</span></h2>
+  <p><strong>Önce:</strong> Sidebar ve Header yan yana sırasız duruyordu, herhangi bir yapı yoktu.</p>
+  <p><strong>Sonra:</strong> Sayfa şu yapıya kavuştu:</p>
+  <ul>
+    <li>Ana <code>div</code>: yatay flex → sol sidebar, sağ içerik yan yana.</li>
+    <li>Sağ taraf dikey flex → üstte Header, altında <code>main</code> (sayfa içeriği buraya geliyor).</li>
+    <li><code>main</code> etrafında <code>p-6</code> padding var → sayfa kenarlara yapışmıyor.</li>
+  </ul>
+  <p>Mantık değişmedi: <code>&lt;Outlet /&gt;</code> hâlâ aynı yerde, sadece nerede göründüğü değişti.</p>
+</div>
+
+<!-- ─── Header.tsx ─── -->
+<div class="file">
+  <h2>🔝 src/components/Header.tsx <span class="tag-ui">UI</span> <span class="tag-new">YENİ</span></h2>
+  <p><strong>Önce:</strong> <code>return &lt;header&gt;Header&lt;/header&gt;;</code> – sadece placeholder metin.</p>
+  <p><strong>Sonra:</strong> Gerçek bir header bileşeni oldu. İçeriği:</p>
+  <ul>
+    <li>Bir <code>&lt;form&gt;</code>: kullanıcı bir şey yazıp Enter'a basınca <code>/search?q=...</code> sayfasına yönlendiriyor. Arama mantığı burada değil, sadece yönlendirme var.</li>
+    <li>Sağda iki ikon butonu: çan (Bell) ve ayarlar (Settings) – şu an işlevleri yok, sadece görsel.</li>
+  </ul>
+</div>
+
+<!-- ─── Sidebar.tsx ─── -->
+<div class="file">
+  <h2>📌 src/components/Sidebar.tsx <span class="tag-ui">UI</span></h2>
+  <p><strong>Önce:</strong> Dört sade <code>&lt;NavLink&gt;</code> vardı, hiç stil yoktu.</p>
+  <p><strong>Sonra:</strong> Üç bölüme ayrıldı:</p>
+  <ul>
+    <li><strong>Üst:</strong> "SafeBite" logosu ve "Your Health Companion" yazısı.</li>
+    <li><strong>Orta:</strong> Nav linkleri artık bir diziden (<code>navItems</code>) üretiliyor. Her linkin bir ikonu var. Aktif link (bulunduğun sayfa) yeşil arka plan alıyor – bunu React Router'ın <code>NavLink</code>'i otomatik yapıyor, <code>isActive</code> prop'u üzerinden.</li>
+    <li><strong>Alt:</strong> Kullanıcı bilgisi (şimdilik sabit "John Doe").</li>
+  </ul>
+  <p><strong>Yeni link:</strong> <code>/scan</code> rotası eklendi (Scan sayfası için).</p>
+</div>
+
+<!-- ─── ProductCard.tsx ─── -->
+<div class="file">
+  <h2>🃏 src/components/ProductCard.tsx <span class="tag-ui">UI</span></h2>
+  <p>Emojimap (<code>🟢 Safe / 🟡 Caution / 🔴 Risky</code>) ve <code>addToFavorites</code> fonksiyonu <strong>değişmedi</strong>. Sadece görsel yapı değişti:</p>
+  <ul>
+    <li>Kart artık kare bir ürün resmi içeriyor. Resim yüklenemezse yerine gri bir ikon gösteriliyor (<code>imgError</code> state'i bunu kontrol ediyor).</li>
+    <li>Marka, ürün adı ve güvenlik emojisi alt bölümde sıralanıyor.</li>
+    <li>"add to favorites" düğmesi artık kartın altında tam genişlikte bir buton.</li>
+  </ul>
+</div>
+
+<!-- ─── Search.tsx ─── -->
+<div class="file">
+  <h2>🔍 src/pages/Search.tsx <span class="tag-ui">UI</span> <span class="tag-logic">MANTIK</span></h2>
+  <p><code>searchProductsByName</code> ve <code>handleSearch</code> fonksiyonları <strong>değişmedi</strong>.</p>
+  <p><strong>Eklenen şey:</strong> <code>useSearchParams</code> hook'u. Bu, URL'de <code>?q=ekmek</code> gibi bir parametre varsa onu okuyup arama kutusuna otomatik dolduruyor. Header'daki arama butonuna tıklayınca bu sayfaya yönlendirme yapılıyor ve sorgu URL'den okunuyor.</p>
+  <p>Görsel: input ve buton stilize edildi, yükleniyor animasyonu eklendi, sonuçlar grid'e alındı.</p>
+</div>
+
+<!-- ─── MyFavoriteProducts.tsx ─── -->
+<div class="file">
+  <h2>❤️ src/pages/MyFavoriteProducts.tsx <span class="tag-ui">UI</span></h2>
+  <p>localStorage'dan favori okuma mantığı <strong>değişmedi</strong>.</p>
+  <p><strong>Eklenen şey:</strong> Liste boşsa "No favorites yet" mesajı gösteriliyor. Doluysa ürünler grid'e alınıyor. Önceden boş liste için hiçbir şey gösterilmiyordu.</p>
+</div>
+
+<!-- ─── MyTriggers.tsx ─── -->
+<div class="file">
+  <h2>⚠️ src/pages/MyTriggers.tsx <span class="tag-ui">UI</span></h2>
+  <p><code>addTrigger</code>, <code>removeTrigger</code> ve <code>useEffect</code> mantığı <strong>değişmedi</strong>.</p>
+  <p><strong>Görsel değişiklikler:</strong></p>
+  <ul>
+    <li>Input stilize edildi, Enter tuşuyla da ekleyebiliyorsun.</li>
+    <li>Triggerlar liste yerine etiket (pill/chip) görünümünde, yanlarında X butonu var.</li>
+    <li>Liste boşken açıklayıcı bir boş durum mesajı var.</li>
+  </ul>
+  <p><strong>Küçük mantık notu:</strong> <code>useState</code> initializer'ına <code>try/catch</code> eklendi. Bunun nedeni: eğer localStorage'daki veri bozuksa <code>JSON.parse</code> hata fırlatır ve sayfa çöker. Bu ekleme seni koruyor.</p>
+</div>
+
+<!-- ─── ProductDetail.tsx ─── -->
+<div class="file">
+  <h2>📋 src/pages/ProductDetail.tsx <span class="tag-fix">FİX</span></h2>
+  <p>Tek satır değişti:</p>
+  <ul>
+    <li><strong>Önce:</strong> <code>([name, value]) => value === "high"</code> – <code>name</code> değişkeni tanımlanmış ama hiç kullanılmamış, TypeScript hata veriyordu.</li>
+    <li><strong>Sonra:</strong> <code>([, value]) => value === "high"</code> – baştaki virgül "bu değeri almıyorum" demek. TypeScript hatası ortadan kalktı.</li>
+  </ul>
+</div>
+
+<!-- ─── getSafetyLevel.ts ─── -->
+<div class="file">
+  <h2>🧮 src/utils/getSafetyLevel.ts <span class="tag-ui">UI</span></h2>
+  <p>Fonksiyonun mantığı <strong>hiç değişmedi</strong>. Sadece fonksiyonun üstüne tek satırlık bir açıklama yorumu eklendi:</p>
+  <pre><code>// Merges built-in and user-defined triggers, then checks ingredients and nutrient levels to classify the product.</code></pre>
+</div>
+
+<!-- ─── App.tsx ─── -->
+<div class="file">
+  <h2>🗺️ src/App.tsx <span class="tag-new">YENİ</span></h2>
+  <p><code>/scan</code> rotası eklendi. Kullanıcı bu adrese gittiğinde <code>Scan</code> bileşeni görünüyor. Diğer rotalar ve yapı değişmedi.</p>
+</div>
+
+<!-- ─── Scan.tsx ─── -->
+<div class="file">
+  <h2>📷 src/pages/Scan.tsx <span class="tag-new">YENİ</span></h2>
+  <p>Tamamen yeni sayfa. İçerik:</p>
+  <ul>
+    <li>Kamera alanı placeholder – köşe kılavuzları olan bir çerçeve, kamera henüz aktif değil.</li>
+    <li>Barkod numarasını elle girebileceğin bir input ve "Go" butonu – işlevsellik henüz bağlı değil, sana bırakıldı.</li>
+  </ul>
+</div>
+
+<!-- ─── Home.tsx ─── -->
+<div class="file">
+  <h2>🏠 src/pages/Home.tsx <span class="tag-ui">UI</span> <span class="tag-new">YENİ</span></h2>
+  <p><strong>Önce:</strong> <code>return &lt;div&gt;Home&lt;/div&gt;;</code> – sadece placeholder.</p>
+  <p><strong>Sonra:</strong> İki bölüm var:</p>
+  <ul>
+    <li><strong>Hero kartı:</strong> Yeşil arka plan, "Can I eat this?" başlığı, "Start Scanning" butonu (<code>/scan</code>'e gidiyor), "Or search →" linki (<code>/search</code>'e gidiyor).</li>
+    <li><strong>Recent Scans:</strong> Henüz işlevsel değil, gelecekte barkod tarama geçmişi burada gösterilecek.</li>
+  </ul>
+</div>
+
+</body>
+</html>

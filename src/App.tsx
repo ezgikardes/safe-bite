@@ -5,6 +5,7 @@ import MyTriggers from "./pages/MyTriggers";
 import ProductDetail from "./pages/ProductDetail";
 import Layout from "./components/Layout";
 import MyFavoriteProducts from "./pages/MyFavoriteProducts";
+import Scan from "./pages/Scan";
 
 function App() {
   return (
@@ -26,6 +27,10 @@ function App() {
           <Route
             path="/my-triggers"
             element={<MyTriggers />}
+          />
+          <Route
+            path="/scan"
+            element={<Scan />}
           />
           <Route
             path="/product/:id"
