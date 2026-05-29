@@ -1,32 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { AlertTriangle, Plus, X } from "lucide-react";
+import { useTriggers } from "../hooks/useTriggers";
 
 export default function MyTriggers() {
-  // State to store list of trigger ingredients user wants to avoid
-  // Lazy initializer with try/catch prevents corrupted localStorage from crashing the app
-  const [savedTriggers, setSavedTriggers] = useState<string[]>(() => {
-    try {
-      return JSON.parse(localStorage.getItem("myTriggers") ?? "[]");
-    } catch {
-      return [];
-    }
-  });
-
   const [newTrigger, setNewTrigger] = useState<string>("");
 
-  // Side effect: automatically save triggers to localStorage whenever the list changes
-  useEffect(() => {
-    localStorage.setItem("myTriggers", JSON.stringify(savedTriggers));
-  }, [savedTriggers]);
+  const { triggers: savedTriggers, addTrigger, removeTrigger } = useTriggers();
 
-  // Add new trigger to list and clear input field
-  function addTrigger() {
-    setSavedTriggers([...savedTriggers, newTrigger]);
+  function handleAdd() {
+    addTrigger(newTrigger);
     setNewTrigger("");
-  }
-
-  function removeTrigger(trigger: string) {
-    setSavedTriggers(savedTriggers.filter((t) => t !== trigger));
   }
 
   return (
@@ -48,14 +31,14 @@ export default function MyTriggers() {
           <input
             value={newTrigger}
             onChange={(e) => setNewTrigger(e.target.value)}
-            onKeyDown={(e) => e.key === "Enter" && addTrigger()}
+            onKeyDown={(e) => e.key === "Enter" && handleAdd()}
             placeholder="e.g. peanuts, gluten, lactose..."
             className="flex-1 bg-transparent text-sm text-text placeholder:text-text-muted outline-none"
           />
         </div>
         {/* Add button with plus icon */}
         <button
-          onClick={addTrigger}
+          onClick={() => handleAdd()}
           className="flex items-center gap-1.5 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors">
           <Plus className="size-4" />
           Ekle
