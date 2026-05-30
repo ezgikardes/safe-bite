@@ -4,6 +4,7 @@ import { AlertTriangle, ShieldCheck, ShieldAlert, ShieldX } from "lucide-react";
 import type { Product } from "../types";
 import { triggers } from "../constants/triggers";
 import { getSafetyLevel } from "../utils/getSafetyLevel";
+import { useTriggers } from "../hooks/useTriggers";
 
 const nutrientLabels: Record<string, string> = {
   fat: "Fat",
@@ -24,12 +25,10 @@ export default function ProductDetail() {
 
   const [product, setProduct] = useState<Product | null>(null);
 
-  // Retrieve user's custom trigger ingredients from localStorage
-  const customTriggers: string[] = JSON.parse(
-    localStorage.getItem("myTriggers") ?? "[]",
-  );
+  const { triggers: savedTriggers } = useTriggers();
+
   // Combine predefined triggers with user's custom triggers
-  const allTriggers = [...triggers, ...customTriggers];
+  const allTriggers = [...triggers, ...savedTriggers];
 
   // Check if any trigger ingredients are present in the product's ingredient list
   const foundTriggers = allTriggers.filter((trigger) =>
@@ -112,10 +111,14 @@ export default function ProductDetail() {
         <div className="flex gap-3 rounded-2xl border border-red-200 bg-red-50 p-4">
           <AlertTriangle className="size-5 text-red-500 shrink-0 mt-0.5" />
           <div>
-            <p className="text-sm font-semibold text-red-700">Contains your trigger ingredients</p>
+            <p className="text-sm font-semibold text-red-700">
+              Contains your trigger ingredients
+            </p>
             <div className="mt-2 flex flex-wrap gap-1.5">
               {foundTriggers.map((t) => (
-                <span key={t} className="rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">
+                <span
+                  key={t}
+                  className="rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">
                   {t}
                 </span>
               ))}
@@ -127,14 +130,19 @@ export default function ProductDetail() {
       {/* Nutrient levels */}
       {product.nutrient_levels && (
         <div className="rounded-2xl border border-border bg-surface p-5 shadow-card">
-          <h2 className="mb-3 text-sm font-semibold text-text">Nutrient Levels</h2>
+          <h2 className="mb-3 text-sm font-semibold text-text">
+            Nutrient Levels
+          </h2>
           <div className="space-y-2">
             {Object.entries(product.nutrient_levels).map(([key, value]) => (
-              <div key={key} className="flex items-center justify-between">
+              <div
+                key={key}
+                className="flex items-center justify-between">
                 <span className="text-sm text-text-secondary">
                   {nutrientLabels[key] ?? key}
                 </span>
-                <span className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${levelStyle[value] ?? "bg-background text-text-muted"}`}>
+                <span
+                  className={`rounded-full px-2.5 py-0.5 text-xs font-semibold capitalize ${levelStyle[value] ?? "bg-background text-text-muted"}`}>
                   {value}
                 </span>
               </div>
