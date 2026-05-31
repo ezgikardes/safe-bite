@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AlertTriangle, ShieldCheck, ShieldAlert, ShieldX, Heart } from "lucide-react";
+import {
+  AlertTriangle,
+  ShieldCheck,
+  ShieldAlert,
+  ShieldX,
+  Heart,
+} from "lucide-react";
 import type { Product } from "../types";
 import { triggers } from "../constants/triggers";
 import { getSafetyLevel } from "../utils/getSafetyLevel";
@@ -60,7 +66,9 @@ export default function ProductDetail() {
         </div>
         <p className="text-sm font-medium text-text">Product not found</p>
         <p className="text-sm text-text-secondary">
-          We couldn't find a product with barcode <span className="font-mono">{id}</span>. Double-check the number and try again.
+          We couldn't find a product with barcode{" "}
+          <span className="font-mono">{id}</span>. Double-check the number and
+          try again.
         </p>
       </div>
     );
@@ -75,6 +83,13 @@ export default function ProductDetail() {
   }
 
   const safetyLevel = getSafetyLevel(product);
+
+  // Identify nutrients flagged as "high" — used to explain caution rating
+  const highNutrients = product.nutrient_levels
+    ? Object.entries(product.nutrient_levels).filter(
+        ([, value]) => value === "high",
+      )
+    : [];
 
   const safetyConfig = {
     safe: {
@@ -130,7 +145,9 @@ export default function ProductDetail() {
             <Heart
               className={`size-4 ${isFavorite(product.code) ? "fill-red-500 text-red-500" : ""}`}
             />
-            {isFavorite(product.code) ? "Remove from favorites" : "Add to favorites"}
+            {isFavorite(product.code)
+              ? "Remove from favorites"
+              : "Add to favorites"}
           </button>
         </div>
       </div>
@@ -149,6 +166,27 @@ export default function ProductDetail() {
                   key={t}
                   className="rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-700">
                   {t}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Caution warning: explains why product was flagged as caution */}
+      {safetyLevel === "caution" && highNutrients.length > 0 && (
+        <div className="flex gap-3 rounded-2xl border border-yellow-200 bg-yellow-50 p-4">
+          <ShieldAlert className="size-5 text-yellow-600 shrink-0 mt-0.5" />
+          <div>
+            <p className="text-sm font-semibold text-yellow-700">
+              High in some nutrients
+            </p>
+            <div className="mt-2 flex flex-wrap gap-1.5">
+              {highNutrients.map(([key]) => (
+                <span
+                  key={key}
+                  className="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-700">
+                  {nutrientLabels[key] ?? key}
                 </span>
               ))}
             </div>

@@ -12,7 +12,8 @@ const steps = [
   {
     icon: AlertTriangle,
     title: "Set your triggers",
-    description: "Add ingredients you want to avoid.",
+    description:
+      "Common reflux & gastritis triggers come built-in — add your own too.",
   },
   {
     icon: ScanLine,

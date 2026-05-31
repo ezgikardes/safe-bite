@@ -30,8 +30,12 @@ export default function MyTriggers() {
         <div>
           <h1 className="text-xl font-bold text-text">My Triggers</h1>
           <p className="mt-1 text-sm text-text-secondary">
-            Ingredients you want to avoid. Products containing these will be
-            flagged.
+            Add your personal trigger ingredients. Products containing them will
+            be flagged as risky.
+          </p>
+          <p className="mt-2 text-xs text-text-muted">
+            Common reflux &amp; gastritis triggers (coffee, chocolate, citrus,
+            onion, garlic…) are always checked, even when this list is empty.
           </p>
         </div>
 
