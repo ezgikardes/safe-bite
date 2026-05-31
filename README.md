@@ -1,12 +1,12 @@
-# SafeBite
+# SafeBites
 
 > Your reflux & gastritis buddy. Scan or search any product to see if it's safe for you.
 
-SafeBite is a React + TypeScript web app that lets people living with food sensitivities — especially reflux and gastritis — check products against a personal list of trigger ingredients. Add your triggers once, then scan a barcode or search by name and get an instant safe / caution / risky assessment.
+SafeBites is a React + TypeScript web app that lets people living with food sensitivities — especially reflux and gastritis — check products against a personal list of trigger ingredients. Add your triggers once, then scan a barcode or search by name and get an instant safe / caution / risky assessment.
 
 ## Why this exists
 
-After a reflux diagnosis I spent months on a low-acid diet, struggling to figure out which ingredients were causing flare-ups. I worked with a specialist dietitian for reflux and gastritis and would not have figured it out without her. SafeBite is meant to make the day-to-day "can I eat this?" question faster for anyone going through the same trial and error — not to replace medical advice, but to take some of the cognitive load off label reading.
+After a reflux diagnosis I spent months on a low-acid diet, struggling to figure out which ingredients were causing flare-ups. I worked with a specialist dietitian for reflux and gastritis and would not have figured it out without her. SafeBites is meant to make the day-to-day "can I eat this?" question faster for anyone going through the same trial and error — not to replace medical advice, but to take some of the cognitive load off label reading.
 
 ## Features
 
@@ -97,7 +97,7 @@ Product data is provided by [Open Food Facts](https://world.openfoodfacts.org), 
 
 ## Disclaimer
 
-SafeBite is a self-tracking tool and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider or registered dietitian about your individual dietary needs.
+SafeBites is a self-tracking tool and is not a substitute for professional medical advice, diagnosis, or treatment. Always consult a qualified healthcare provider or registered dietitian about your individual dietary needs.
 
 ## Acknowledgments
 

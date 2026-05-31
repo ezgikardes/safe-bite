@@ -11,7 +11,7 @@ export default function Layout() {
         </main>
         <footer className="border-t border-border bg-surface px-6 py-4">
           <p className="text-xs text-text-muted leading-relaxed">
-            SafeBite is a self-tracking tool and is not a substitute for
+            SafeBites is a self-tracking tool and is not a substitute for
             professional medical advice, diagnosis, or treatment. Always consult
             a qualified healthcare provider or registered dietitian about your
             individual dietary needs.
