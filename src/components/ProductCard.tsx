@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getSafetyLevel } from "../utils/getSafetyLevel";
 import { ImageOff } from "lucide-react";
 import { useState } from "react";
+import { useFavorites } from "../hooks/useFavorites";
 
 type ProductCardProps = {
   product: Product;
@@ -15,30 +16,7 @@ export default function ProductCard({ product }: ProductCardProps) {
     risky: "🔴 Risky",
   };
 
-  // Retrieve saved favorite products from browser's local storage
-  const savedProducts: Product[] = JSON.parse(
-    localStorage.getItem("myFavorites") ?? "[]",
-  );
-
-  const [isFavorite, setIsFavorite] = useState<boolean>(
-    savedProducts.some((p) => p.code === product.code),
-  );
-
-  // Toggles a product in the favorites list and updates localStorage
-  function toggleFavorite(newProduct: Product) {
-    if (savedProducts.some((p) => p.code === newProduct.code)) {
-      localStorage.setItem(
-        "myFavorites",
-        JSON.stringify(savedProducts.filter((p) => p.code !== newProduct.code)),
-      );
-    } else {
-      localStorage.setItem(
-        "myFavorites",
-        JSON.stringify([...savedProducts, newProduct]),
-      );
-    }
-    setIsFavorite(!isFavorite);
-  }
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   // State to track if product image failed to load
   const [imgError, setImgError] = useState(false);
@@ -79,7 +57,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             toggleFavorite(product);
           }}
           className="mt-2 w-full rounded-lg border border-border py-1.5 text-xs font-medium text-text-secondary hover:bg-background transition-colors">
-          {isFavorite ? `Remove from favorites` : `Add to favorites`}
+          {isFavorite(product.code) ? "Remove from favorites" : "Add to favorites"}
         </button>
       </div>
     </Link>

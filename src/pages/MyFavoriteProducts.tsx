@@ -1,12 +1,9 @@
 import ProductCard from "../components/ProductCard";
-import type { Product } from "../types";
 import { Heart } from "lucide-react";
+import { useFavorites } from "../hooks/useFavorites";
 
 export default function MyFavoriteProducts() {
-  // Retrieve saved favorite products from browser's local storage
-  const myFavorites: Product[] = JSON.parse(
-    localStorage.getItem("myFavorites") ?? "[]",
-  );
+  const { favorites: myFavorites } = useFavorites();
 
   return (
     <div className="space-y-5">

@@ -7,11 +7,13 @@ import Layout from "./components/Layout";
 import MyFavoriteProducts from "./pages/MyFavoriteProducts";
 import Scan from "./pages/Scan";
 import { TriggerProvider } from "./context/TriggerProvider";
+import { FavoritesProvider } from "./context/FavoritesProvider";
 
 function App() {
   return (
     <TriggerProvider>
-      <BrowserRouter>
+      <FavoritesProvider>
+        <BrowserRouter>
         <Routes>
           <Route element={<Layout />}>
             <Route
@@ -40,7 +42,8 @@ function App() {
             />
           </Route>
         </Routes>
-      </BrowserRouter>
+        </BrowserRouter>
+      </FavoritesProvider>
     </TriggerProvider>
   );
 }
