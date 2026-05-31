@@ -23,7 +23,9 @@ export default function MyTriggers() {
 
   return (
     <div className="space-y-5">
-      <form onSubmit={handleSubmit(handleAdd)}>
+      <form
+        onSubmit={handleSubmit(handleAdd)}
+        className="space-y-5">
         {/* Page header with title and description */}
         <div>
           <h1 className="text-xl font-bold text-text">My Triggers</h1>
@@ -40,12 +42,13 @@ export default function MyTriggers() {
             {/* Text input - triggers add on Enter key or button click */}
             <input
               {...register("trigger", {
-                required: "This field is required.",
+                required: "Please enter a trigger ingredient.",
                 validate: (value) =>
                   savedTriggers.includes(value)
-                    ? "This trigger has already been added."
+                    ? "You've already added this trigger."
                     : true,
               })}
+              autoComplete="off"
               placeholder="e.g. peanut, yoghurt, wheat..."
               className="flex-1 bg-transparent text-sm text-text placeholder:text-text-muted outline-none"
             />
@@ -55,10 +58,12 @@ export default function MyTriggers() {
             type="submit"
             className="flex items-center gap-1.5 rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white hover:bg-primary-hover transition-colors">
             <Plus className="size-4" />
-            Ekle
+            Add trigger
           </button>
         </div>
-        {errors.trigger && <p>{errors.trigger.message}</p>}
+        {errors.trigger && (
+          <p className="text-sm text-red-500">{errors.trigger.message}</p>
+        )}
 
         {/* Conditional rendering: Show empty state or triggers list */}
         {savedTriggers.length === 0 ? (
