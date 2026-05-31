@@ -14,7 +14,7 @@ export default function Sidebar() {
   return (
     <aside className="flex w-56 shrink-0 flex-col border-r border-border bg-surface">
       <div className="px-5 py-5">
-        <span className="text-xl font-bold text-primary">SafeBite</span>
+        <span className="text-xl font-bold text-primary">SafeBites</span>
         <p className="text-xs text-text-muted mt-0.5">
           Your reflux & gastritis buddy
         </p>
