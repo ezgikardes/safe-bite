@@ -42,10 +42,10 @@ export default function ProductCard({ product }: ProductCardProps) {
 
       <div className="flex flex-1 flex-col gap-1 p-3">
         <p className="text-xs text-text-muted">{product.brands}</p>
-        <p className="text-sm font-semibold text-text line-clamp-2">
+        <p className="text-sm font-semibold text-text line-clamp-2 min-h-10">
           {product.product_name}
         </p>
-        <p className="mt-1 text-xs">
+        <p className="mt-1 mb-3 text-sm font-medium">
           {product.ingredients_text_en
             ? emojiMap[getSafetyLevel(product)]
             : "⚠️ Ingredients unknown"}
@@ -56,7 +56,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             e.stopPropagation();
             toggleFavorite(product);
           }}
-          className="mt-2 w-full rounded-lg border border-border py-1.5 text-xs font-medium text-text-secondary hover:bg-background transition-colors">
+          className="mt-auto w-full rounded-lg border border-border py-1.5 text-xs font-medium text-text-secondary hover:bg-background transition-colors">
           {isFavorite(product.code) ? "Remove from favorites" : "Add to favorites"}
         </button>
       </div>

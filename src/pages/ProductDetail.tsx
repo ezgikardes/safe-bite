@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { AlertTriangle, ShieldCheck, ShieldAlert, ShieldX } from "lucide-react";
+import { AlertTriangle, ShieldCheck, ShieldAlert, ShieldX, Heart } from "lucide-react";
 import type { Product } from "../types";
 import { triggers } from "../constants/triggers";
 import { getSafetyLevel } from "../utils/getSafetyLevel";
 import { useTriggers } from "../hooks/useTriggers";
+import { useFavorites } from "../hooks/useFavorites";
 
 const nutrientLabels: Record<string, string> = {
   fat: "Fat",
@@ -27,6 +28,7 @@ export default function ProductDetail() {
   const [notFound, setNotFound] = useState(false);
 
   const { triggers: savedTriggers } = useTriggers();
+  const { toggleFavorite, isFavorite } = useFavorites();
 
   // Combine predefined triggers with user's custom triggers
   const allTriggers = [...triggers, ...savedTriggers];
@@ -122,6 +124,14 @@ export default function ProductDetail() {
             <SafetyIcon className="size-4" />
             {safetyConfig.label}
           </span>
+          <button
+            onClick={() => toggleFavorite(product)}
+            className="mt-2 inline-flex w-fit items-center gap-1.5 rounded-lg border border-border bg-surface px-3 py-1.5 text-sm font-medium text-text-secondary transition-colors hover:bg-background">
+            <Heart
+              className={`size-4 ${isFavorite(product.code) ? "fill-red-500 text-red-500" : ""}`}
+            />
+            {isFavorite(product.code) ? "Remove from favorites" : "Add to favorites"}
+          </button>
         </div>
       </div>
 
