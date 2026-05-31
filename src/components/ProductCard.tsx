@@ -16,16 +16,28 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   // Retrieve saved favorite products from browser's local storage
-  const savedProducts: object[] = JSON.parse(
+  const savedProducts: Product[] = JSON.parse(
     localStorage.getItem("myFavorites") ?? "[]",
   );
 
-  // Function to save a product to favorites by storing it in local storage
-  function addToFavorites(newProduct: Product) {
-    localStorage.setItem(
-      "myFavorites",
-      JSON.stringify([...savedProducts, newProduct]),
-    );
+  const [isFavorite, setIsFavorite] = useState<boolean>(
+    savedProducts.some((p) => p.code === product.code),
+  );
+
+  // Toggles a product in the favorites list and updates localStorage
+  function toggleFavorite(newProduct: Product) {
+    if (savedProducts.some((p) => p.code === newProduct.code)) {
+      localStorage.setItem(
+        "myFavorites",
+        JSON.stringify(savedProducts.filter((p) => p.code !== newProduct.code)),
+      );
+    } else {
+      localStorage.setItem(
+        "myFavorites",
+        JSON.stringify([...savedProducts, newProduct]),
+      );
+    }
+    setIsFavorite(!isFavorite);
   }
 
   // State to track if product image failed to load
@@ -64,10 +76,10 @@ export default function ProductCard({ product }: ProductCardProps) {
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
-            addToFavorites(product);
+            toggleFavorite(product);
           }}
           className="mt-2 w-full rounded-lg border border-border py-1.5 text-xs font-medium text-text-secondary hover:bg-background transition-colors">
-          Add to favorites
+          {isFavorite ? `Remove from favorites` : `Add to favorites`}
         </button>
       </div>
     </Link>
