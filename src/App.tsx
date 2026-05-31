@@ -14,34 +14,34 @@ function App() {
     <TriggerProvider>
       <FavoritesProvider>
         <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route
-              path="/"
-              element={<Home />}
-            />
-            <Route
-              path="/search"
-              element={<Search />}
-            />
-            <Route
-              path="/my-favorite-products"
-              element={<MyFavoriteProducts />}
-            />
-            <Route
-              path="/my-triggers"
-              element={<MyTriggers />}
-            />
-            <Route
-              path="/scan"
-              element={<Scan />}
-            />
-            <Route
-              path="/product/:id"
-              element={<ProductDetail />}
-            />
-          </Route>
-        </Routes>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route
+                path="/"
+                element={<Home />}
+              />
+              <Route
+                path="/search"
+                element={<Search />}
+              />
+              <Route
+                path="/my-favorite-products"
+                element={<MyFavoriteProducts />}
+              />
+              <Route
+                path="/my-triggers"
+                element={<MyTriggers />}
+              />
+              <Route
+                path="/scan"
+                element={<Scan />}
+              />
+              <Route
+                path="/product/:id"
+                element={<ProductDetail />}
+              />
+            </Route>
+          </Routes>
         </BrowserRouter>
       </FavoritesProvider>
     </TriggerProvider>
