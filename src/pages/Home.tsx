@@ -8,9 +8,11 @@ export default function Home() {
       <div className="relative overflow-hidden rounded-2xl bg-primary px-10 py-12 text-white">
         <div className="relative z-10">
           <div className="pr-64">
-            <h1 className="text-3xl font-bold leading-tight">Can I eat this?</h1>
+            <h1 className="text-3xl font-bold leading-tight">
+              Can I <span className="text-emerald-200">eat</span> this?
+            </h1>
             <p className="mt-3 text-base text-white/80">
-              Scan any food item to get instant safety insights based on your personal health triggers.
+              Reflux and gastritis turn every meal into a guessing game. Scan or search any product to see if it's safe for you.
             </p>
             <div className="mt-6 flex items-center gap-4">
               <Link

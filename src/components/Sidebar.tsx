@@ -1,12 +1,5 @@
 import { NavLink } from "react-router-dom";
-import {
-  Home,
-  Search,
-  Heart,
-  AlertTriangle,
-  ScanLine,
-  User,
-} from "lucide-react";
+import { Home, Search, Heart, AlertTriangle, ScanLine } from "lucide-react";
 
 // Navigation menu items with routes, labels, and their corresponding icons
 const navItems = [
@@ -22,7 +15,9 @@ export default function Sidebar() {
     <aside className="flex w-56 shrink-0 flex-col border-r border-border bg-surface">
       <div className="px-5 py-5">
         <span className="text-xl font-bold text-primary">SafeBite</span>
-        <p className="text-xs text-text-muted mt-0.5">Your Health Companion</p>
+        <p className="text-xs text-text-muted mt-0.5">
+          Your reflux & gastritis buddy
+        </p>
       </div>
 
       <nav className="flex-1 px-3 py-2 space-y-0.5">
@@ -45,21 +40,6 @@ export default function Sidebar() {
           </NavLink>
         ))}
       </nav>
-
-      <div className="border-t border-border px-4 py-4">
-        <div className="flex items-center gap-3">
-          {/* TODO user sign-up feature */}
-          <div className="flex size-8 items-center justify-center rounded-full bg-primary-light text-primary">
-            <User className="size-4" />
-          </div>
-          <div>
-            <p className="text-sm font-medium text-text leading-none">
-              John Doe
-            </p>
-            <p className="text-xs text-text-muted mt-0.5">Free Member</p>
-          </div>
-        </div>
-      </div>
     </aside>
   );
 }

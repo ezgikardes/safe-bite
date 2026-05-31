@@ -47,7 +47,15 @@ export default function Search() {
       <div>
         <h1 className="text-xl font-bold text-text">Search Products</h1>
         <p className="mt-1 text-sm text-text-secondary">
-          Search our database of over 100,000 food products.
+          Product data is provided by{" "}
+          <a
+            href="https://world.openfoodfacts.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline">
+            Open Food Facts
+          </a>
+          , a free and collaborative food product database.
         </p>
       </div>
 
