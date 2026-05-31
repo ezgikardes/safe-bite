@@ -24,6 +24,7 @@ export default function ProductDetail() {
   const { id } = useParams();
 
   const [product, setProduct] = useState<Product | null>(null);
+  const [notFound, setNotFound] = useState(false);
 
   const { triggers: savedTriggers } = useTriggers();
 
@@ -35,15 +36,33 @@ export default function ProductDetail() {
     product?.ingredients_text_en?.toLowerCase().includes(trigger),
   );
 
-  // Fetch product details from API using the product ID from URL
+  // Fetch product details from API; if the API has no record, show a not-found state.
   useEffect(() => {
     async function fetchProduct() {
       const res = await fetch(`/api/api/v2/product/${id}`);
       const data = await res.json();
-      setProduct(data.product);
+      if (data.product) {
+        setProduct(data.product);
+      } else {
+        setNotFound(true);
+      }
     }
     fetchProduct();
   }, [id]);
+
+  if (notFound) {
+    return (
+      <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-border bg-surface py-12 text-center max-w-md">
+        <div className="rounded-full bg-background p-3">
+          <AlertTriangle className="size-6 text-text-muted" />
+        </div>
+        <p className="text-sm font-medium text-text">Product not found</p>
+        <p className="text-sm text-text-secondary">
+          We couldn't find a product with barcode <span className="font-mono">{id}</span>. Double-check the number and try again.
+        </p>
+      </div>
+    );
+  }
 
   if (product === null) {
     return (

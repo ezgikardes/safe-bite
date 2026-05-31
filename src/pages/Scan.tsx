@@ -6,7 +6,9 @@ import { Barcode } from "lucide-react";
 export default function Scan() {
   const navigate = useNavigate();
   const [manualCode, setManualCode] = useState("");
+  const [manualError, setManualError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // Keeps a reference to the scanner instance so it can be stopped during cleanup.
   const scannerRef = useRef<Html5Qrcode | null>(null);
 
   // Start the camera scanner when the page mounts; stop it when the user leaves.
@@ -35,10 +37,16 @@ export default function Scan() {
     };
   }, [navigate]);
 
-  // Manual entry: navigate to the same product route used by scans.
-  function handleManualSubmit(e: React.ChangeEvent) {
+  // Manual entry: validate barcode format, then navigate to the product route.
+  function handleManualSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
-    if (manualCode.trim()) navigate(`/product/${manualCode.trim()}`);
+    const code = manualCode.trim();
+    if (!/^\d{8,13}$/.test(code)) {
+      setManualError("Barcode must be 8–13 digits.");
+      return;
+    }
+    setManualError(null);
+    navigate(`/product/${code}`);
   }
 
   return (
@@ -82,8 +90,12 @@ export default function Scan() {
         <div className="flex gap-2">
           <input
             type="text"
+            inputMode="numeric"
             value={manualCode}
-            onChange={(e) => setManualCode(e.target.value)}
+            onChange={(e) => {
+              setManualCode(e.target.value);
+              if (manualError) setManualError(null);
+            }}
             placeholder="e.g. 3017620422003"
             className="flex-1 rounded-lg border border-border bg-background px-3 py-2 text-sm text-text placeholder:text-text-muted outline-none focus:border-primary transition-colors"
           />
@@ -93,6 +105,9 @@ export default function Scan() {
             Go
           </button>
         </div>
+        {manualError && (
+          <p className="text-sm text-red-500">{manualError}</p>
+        )}
       </form>
     </div>
   );
