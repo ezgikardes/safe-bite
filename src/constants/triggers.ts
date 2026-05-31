@@ -1,8 +1,17 @@
 export const triggers = [
   "tomato",
   "lemon",
+  "lime",
   "orange",
   "coffee",
   "chocolate",
   "cocoa",
+  "onion",
+  "garlic",
+  "mint",
+  "black pepper",
+  "red chili powder",
+  "red chili flakes",
+  "black tee",
+  "green tee",
 ];
