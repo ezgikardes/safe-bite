@@ -2,7 +2,7 @@ import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import {
   ScanLine,
-  ChevronRight,
+  // ChevronRight,
   AlertTriangle,
   ShieldCheck,
   Heart,
@@ -89,7 +89,7 @@ export default function Home() {
       </div>
 
       {/* Recent Scans */}
-      <div>
+      {/* <div>
         <div className="mb-3 flex items-center justify-between">
           <h2 className="text-base font-semibold text-text">
             Your Recent Scans
@@ -102,7 +102,7 @@ export default function Home() {
         <p className="text-sm text-text-secondary">
           Scan a product to see your history here.
         </p>
-      </div>
+      </div> */}
     </div>
   );
 }
