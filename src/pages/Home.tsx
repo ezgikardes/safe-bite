@@ -39,20 +39,22 @@ export default function Home() {
         <div className="relative z-10">
           <div className="pr-64">
             <h1 className="text-3xl font-bold leading-tight">
-              Can I <span className="text-emerald-200">eat</span> this?
+              Can I eat this?
             </h1>
             <p className="mt-3 text-base text-white/80">
-              Reflux and gastritis turn every meal into a guessing game. Scan or search any product to see if it's safe for you.
+              Reflux and gastritis turn every meal into a guessing game. Scan or
+              search any product to see if it's safe for you.
             </p>
             <div className="mt-6 flex items-center gap-4">
               <Link
                 to="/scan"
-                className="flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-primary hover:bg-white/90 transition-colors"
-              >
+                className="flex items-center gap-2 rounded-lg bg-white px-5 py-2.5 text-sm font-semibold text-primary hover:bg-white/90 transition-colors">
                 <ScanLine className="size-4" />
                 Start Scanning
               </Link>
-              <Link to="/search" className="text-sm text-white/80 hover:text-white transition-colors">
+              <Link
+                to="/search"
+                className="text-sm text-white/80 hover:text-white transition-colors">
                 Or search →
               </Link>
             </div>
@@ -74,7 +76,9 @@ export default function Home() {
                   <Icon className="size-4 text-primary" />
                 </div>
                 <p className="text-sm font-semibold text-text">{title}</p>
-                <p className="mt-1 text-xs text-text-secondary">{description}</p>
+                <p className="mt-1 text-xs text-text-secondary">
+                  {description}
+                </p>
               </div>
               {index < steps.length - 1 && (
                 <div className="hidden h-px w-6 self-center bg-border lg:block" />
@@ -87,13 +91,17 @@ export default function Home() {
       {/* Recent Scans */}
       <div>
         <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-base font-semibold text-text">Your Recent Scans</h2>
+          <h2 className="text-base font-semibold text-text">
+            Your Recent Scans
+          </h2>
           <button className="flex items-center gap-1 text-sm text-primary hover:underline">
             View all history
             <ChevronRight className="size-4" />
           </button>
         </div>
-        <p className="text-sm text-text-secondary">Scan a product to see your history here.</p>
+        <p className="text-sm text-text-secondary">
+          Scan a product to see your history here.
+        </p>
       </div>
     </div>
   );
