@@ -14,7 +14,7 @@ export default function MyTriggers() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>();
+  } = useForm<FormValues>({ reValidateMode: "onSubmit" });
 
   function handleAdd(data: FormValues) {
     addTrigger(data.trigger);
