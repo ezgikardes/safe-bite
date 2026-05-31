@@ -1,5 +1,35 @@
+import { Fragment } from "react";
 import { Link } from "react-router-dom";
-import { ScanLine, ChevronRight } from "lucide-react";
+import {
+  ScanLine,
+  ChevronRight,
+  AlertTriangle,
+  ShieldCheck,
+  Heart,
+} from "lucide-react";
+
+const steps = [
+  {
+    icon: AlertTriangle,
+    title: "Set your triggers",
+    description: "Add ingredients you want to avoid.",
+  },
+  {
+    icon: ScanLine,
+    title: "Scan or search",
+    description: "Use the camera or search any product.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "See if it's safe",
+    description: "Get an instant safe, caution, or risky badge.",
+  },
+  {
+    icon: Heart,
+    title: "Save your favorites",
+    description: "Build your trusted list for quick access.",
+  },
+];
 
 export default function Home() {
   return (
@@ -31,6 +61,27 @@ export default function Home() {
         <div className="absolute -right-12 -top-12 size-80 rounded-full bg-white/5" />
         <div className="absolute right-24 -bottom-16 size-64 rounded-full bg-white/5" />
         <div className="absolute right-4 top-4 size-40 rounded-full bg-white/5" />
+      </div>
+
+      {/* How it works */}
+      <div>
+        <h2 className="mb-4 text-base font-semibold text-text">How it works</h2>
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-0">
+          {steps.map(({ icon: Icon, title, description }, index) => (
+            <Fragment key={title}>
+              <div className="flex-1 rounded-2xl border border-border bg-surface p-4 shadow-card">
+                <div className="mb-3 w-fit rounded-full bg-primary-light p-2">
+                  <Icon className="size-4 text-primary" />
+                </div>
+                <p className="text-sm font-semibold text-text">{title}</p>
+                <p className="mt-1 text-xs text-text-secondary">{description}</p>
+              </div>
+              {index < steps.length - 1 && (
+                <div className="hidden h-px w-6 self-center bg-border lg:block" />
+              )}
+            </Fragment>
+          ))}
+        </div>
       </div>
 
       {/* Recent Scans */}

@@ -54,7 +54,7 @@ export default function Scan() {
       <div>
         <h1 className="text-xl font-bold text-text">Scan a Product</h1>
         <p className="mt-1 text-sm text-text-secondary">
-          Point your camera at a barcode to get instant safety insights.
+          Point your camera at a barcode to check it against your triggers.
         </p>
       </div>
 
