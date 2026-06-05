@@ -1,0 +1,16 @@
+[[redirects]]
+  from = "/api/*"
+  to = "https://world.openfoodfacts.org/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/search-api/*"
+  to = "https://search.openfoodfacts.org/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
