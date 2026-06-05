@@ -67,8 +67,8 @@ export default function ProductDetail() {
         <p className="text-sm font-medium text-text">Product not found</p>
         <p className="text-sm text-text-secondary">
           We couldn't find a product with barcode{" "}
-          <span className="font-mono">{id}</span>. Double-check the number and
-          try again.
+          <span className="font-mono">{id}</span>. Double-check the number. If
+          it's correct, it may be a non-food product.
         </p>
       </div>
     );
