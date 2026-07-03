@@ -27,7 +27,6 @@ const levelStyle: Record<string, string> = {
 };
 
 export default function ProductDetail() {
-  // Extract product ID from URL parameters
   const { id } = useParams();
 
   const [product, setProduct] = useState<Product | null>(null);
@@ -44,7 +43,6 @@ export default function ProductDetail() {
     product?.ingredients_text_en?.toLowerCase().includes(trigger),
   );
 
-  // Fetch product details from API; if the API has no record, show a not-found state.
   useEffect(() => {
     async function fetchProduct() {
       const res = await fetch(`/api/api/v2/product/${id}`);
