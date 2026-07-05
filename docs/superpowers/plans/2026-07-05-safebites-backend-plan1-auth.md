@@ -6,11 +6,11 @@
 
 **Architecture:** `backend/` altında bağımsız bir Spring Boot 3 uygulaması. Katmanlar: web (controller + DTO) → auth (servis) → user (JPA entity + repository) → security (JWT üretimi/doğrulaması + Spring Security filtresi). Veri PostgreSQL'de; testler hızlı olması için H2 in-memory üzerinde koşar.
 
-**Tech Stack:** Java 21, Spring Boot 3.4.x, Maven (mvnw wrapper), Spring Web, Spring Data JPA, Spring Security, PostgreSQL (dev), H2 (test), jjwt 0.12.x, BCrypt, JUnit 5 + MockMvc.
+**Tech Stack:** Java 17, Spring Boot 3.4.x, Maven (mvnw wrapper), Spring Web, Spring Data JPA, Spring Security, PostgreSQL (dev), H2 (test), jjwt 0.12.x, BCrypt, JUnit 5 + MockMvc.
 
 ## Global Constraints
 
-- Java sürümü: **21** (LTS).
+- Java sürümü: **17** (LTS).
 - Spring Boot: **3.4.x**.
 - Kök Java paketi: **`com.safebites`**.
 - Backend dizini: repo kökünde **`backend/`** (monorepo).
@@ -79,7 +79,7 @@ backend/
 - [ ] **Step 1: Projeyi oluştur (scaffold)**
 
 IntelliJ → **New Project → Spring Boot** (veya https://start.spring.io) ile şu ayarları seç:
-- Project: **Maven**, Language: **Java**, Java: **21**, Spring Boot: **3.4.x**
+- Project: **Maven**, Language: **Java**, Java: **17**, Spring Boot: **3.4.x**
 - Group: `com.safebites`, Artifact: `backend`, Package name: `com.safebites`
 - Dependencies: **Spring Web** (şimdilik yalnızca bu)
 - Konum: repo kökünde `backend/` klasörü olacak şekilde.
