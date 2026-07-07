@@ -129,7 +129,7 @@ safe-bites/
 
 - Google ile giriş, aynı `users` tablosuna `google_id` üzerinden bağlanır.
 - **Hesap eşleştirme kuralı:** Bir Google girişinin email'i mevcut bir email/şifre hesabıyla eşleşiyorsa, o kullanıcıya `google_id` eklenir (yeni/duplike hesap açılmaz).
-- Aşama 1 uçtan uca çalıştıktan **sonra** eklenir.
+- **Faz 4'e ertelendi (§9):** temel akış (Faz 2–3 — triggers + favorites uçtan uca) çalıştıktan sonra eklenir. Zorunlu değil.
 
 ---
 
@@ -162,20 +162,34 @@ Tüm korumalı uçlar yalnızca **token'daki kullanıcının kendi** verisiyle �
 
 ---
 
-## 9. Görev Sırası (Implementation Tasks)
+## 9. Görev Sırası — Faz Planı
 
-Bağımlılık zinciri gözetilerek, her adım test edilebilir bir çıktı verir:
+**İlke:** Her faz **çalışan, elle test edilebilir bir ara durumla (Zwischenstand)** biter — asla "her şeyi yığ, en sonda çalışsın" değil. Önce **çekirdek kullanıcı hikayesi**; süs/zorunlu olmayan özellikler (Google) sona. Full-stack olduğu için mümkün olan en erken noktada **frontend + backend birlikte çalışan** bir dönüm noktası hedeflenir. Her faz ince bir **dikey dilim**dir (frontend → backend → DB) ve gerçek bir kullanıcı aksiyonunu uçtan uca çalıştırır. Her faz içindeki her task da kendi başına yeşil/test edilebilir biter.
 
-1. **Backend iskeleti** — Spring Boot projesi (Web, Security, JPA, PostgreSQL driver, validation, JWT lib). Tek "hello" endpoint çalışır.
-2. **Veritabanı + veri modeli** — Postgres bağlantısı; `users`, `triggers`, `favorites` tabloları (Entity + JPA repository).
-3. **Auth** — (a) email+şifre+JWT (kayıt, giriş, Spring Security, JWT filtresi); (b) çalışınca Google OAuth2.
-4. **Triggers API + frontend** — CRUD uçları + React `MyTriggers` sayfasının API'ye bağlanması. İlk uçtan uca dikey dilim.
-5. **Favorites API + frontend** — Aynı desen; `product_data` JSONB.
-6. **Frontend cila** — Auth context, login/register sayfaları, korumalı route'lar, hata/yükleniyor durumları.
+### Faz 1 — Backend auth temeli _(zorunlu taban; curl ile test edilir)_
 
-**Opsiyonel 7. adım — Deploy:** Backend → Render/Railway, Postgres → Neon/Supabase Postgres, frontend → Netlify/Vercel. Env değişkenleri (API URL, JWT secret, DB bağlantısı).
+Backend iskeleti + veritabanı bağlantısı + `users` tablosu (Entity/repository) + email+şifre+JWT (kayıt, giriş, `/me`, Spring Security + JWT filtresi).
+**Ara durum:** `curl` ile kaydol → giriş (JWT al) → token'la `/me` çalışır. _(Frontend bu fazda hâlâ localStorage ile çalışmaya devam eder — bozulmaz.)_
 
-**Sıra gerekçesi:** DB olmadan kullanıcı saklanamaz; auth olmadan "bu veri kimin?" denemez; trigger (sadece string) auth'u en basit şekilde test eder; frontend en sonda, backend Postman'le test edilmişken bağlanır.
+### Faz 2 — ÇEKİRDEK HİKAYE: Triggers uçtan uca _(ilk "ikisi birden çalışıyor" dönüm noktası)_
+
+Backend: `triggers` tablosu + CRUD uçları. Frontend: auth katmanı (Login/Register sayfaları, token saklama, korumalı route'lar) + `MyTriggers` sayfasının API'ye bağlanması.
+**Ara durum:** kaydol → giriş → trigger ekle → DB'de kalıcı → çıkış → tekrar giriş → trigger hâlâ orada.
+
+### Faz 3 — Favorites uçtan uca
+
+Backend: `favorites` tablosu (`product_data` JSONB) + CRUD uçları. Frontend: `MyFavoriteProducts` sayfasının API'ye bağlanması.
+**Ara durum:** favori ekle → kalıcı → tekrar girişte hâlâ orada.
+
+### Faz 4 — Google ile giriş (OAuth2) _(ertelendi — zorunlu değil)_
+
+Temel akış (Faz 2–3) uçtan uca çalıştıktan sonra eklenir. Aynı `users` tablosuna `google_id` üzerinden bağlanır (§6 Aşama 2).
+
+### Faz 5 — Deploy _(opsiyonel, en son)_
+
+Backend → Render/Railway, Postgres → Neon/Supabase Postgres, frontend → Netlify/Vercel. Env değişkenleri (API URL, JWT secret, DB bağlantısı).
+
+**Sıra gerekçesi:** DB olmadan kullanıcı saklanamaz; auth olmadan "bu veri kimin?" denemez; triggers (sadece string) çekirdek hikayeyi en basit dikey dilimle uçtan uca kanıtlar; favoriler ikinci dilim; Google ve deploy en sona. Her tablo, ihtiyaç duyan fazda oluşturulur (users → Faz 1, triggers → Faz 2, favorites → Faz 3).
 
 ---
 

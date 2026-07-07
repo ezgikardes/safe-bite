@@ -4,6 +4,8 @@
 
 **Goal:** Çalışan bir Spring Boot API kurmak — kullanıcı kaydı/girişi email+şifre ile yapılır, giriş bir JWT döndürür, korumalı uçlar token'sız isteği reddeder.
 
+**Yol haritasındaki yeri:** Bu, dikey-dilim faz planının **Faz 1**'idir (backend auth temeli; yalnızca `users` tablosu). Zorunlu tabandır ve curl ile test edilir. Sonraki fazlar uçtan uca dilimlerdir: **Faz 2** triggers (frontend+backend birlikte — çekirdek hikaye), **Faz 3** favorites, **Faz 4** Google (ertelendi). Bkz. spec §9.
+
 **Architecture:** `backend/` altında bağımsız bir Spring Boot 3 uygulaması. Katmanlar: web (controller + DTO) → auth (servis) → user (JPA entity + repository) → security (JWT üretimi/doğrulaması + Spring Security filtresi). Veri PostgreSQL'de; testler hızlı olması için H2 in-memory üzerinde koşar.
 
 **Tech Stack:** Java 17, Spring Boot 3.4.x, Maven (mvnw wrapper), Spring Web, Spring Data JPA, Spring Security, PostgreSQL (dev), H2 (test), jjwt 0.12.x, BCrypt, JUnit 5 + MockMvc.
