@@ -3,12 +3,10 @@ import { useParams } from "react-router-dom";
 import {
   AlertTriangle,
   ShieldCheck,
-  ShieldAlert,
   ShieldX,
   Heart,
 } from "lucide-react";
 import type { Product } from "../types";
-import { triggers } from "../constants/triggers";
 import { getSafetyLevel } from "../utils/getSafetyLevel";
 import { useTriggers } from "../hooks/useTriggers";
 import { useFavorites } from "../hooks/useFavorites";
@@ -35,10 +33,8 @@ export default function ProductDetail() {
   const { triggers: savedTriggers } = useTriggers();
   const { toggleFavorite, isFavorite } = useFavorites();
 
-  // Combine predefined triggers with user's custom triggers
-  const allTriggers = [...triggers, ...savedTriggers];
+  const allTriggers = savedTriggers;
 
-  // Check if any trigger ingredients are present in the product's ingredient list
   const foundTriggers = allTriggers.filter((trigger) =>
     product?.ingredients_text_en?.toLowerCase().includes(trigger),
   );
@@ -82,23 +78,11 @@ export default function ProductDetail() {
 
   const safetyLevel = getSafetyLevel(product);
 
-  // Identify nutrients flagged as "high" — used to explain caution rating
-  const highNutrients = product.nutrient_levels
-    ? Object.entries(product.nutrient_levels).filter(
-        ([, value]) => value === "high",
-      )
-    : [];
-
   const safetyConfig = {
     safe: {
       icon: ShieldCheck,
       label: "Safe for you",
       className: "bg-green-50 text-green-700 border-green-200",
-    },
-    caution: {
-      icon: ShieldAlert,
-      label: "Caution",
-      className: "bg-yellow-50 text-yellow-700 border-yellow-200",
     },
     risky: {
       icon: ShieldX,
@@ -111,7 +95,6 @@ export default function ProductDetail() {
 
   return (
     <div className="space-y-5">
-      {/* Product header card */}
       <div className="grid grid-cols-[200px_1fr] gap-6 rounded-2xl border border-border bg-surface p-6 shadow-card">
         {product.image_front_url ? (
           <img
@@ -131,7 +114,6 @@ export default function ProductDetail() {
           <h1 className="text-2xl font-bold text-text leading-snug">
             {product.product_name ?? "Unnamed product"}
           </h1>
-          {/* Safety badge */}
           <span
             className={`inline-flex w-fit items-center gap-1.5 rounded-full border px-3 py-1.5 text-sm font-semibold ${safetyConfig.className}`}>
             <SafetyIcon className="size-4" />
@@ -150,7 +132,6 @@ export default function ProductDetail() {
         </div>
       </div>
 
-      {/* Trigger warning */}
       {foundTriggers.length > 0 && (
         <div className="flex gap-3 rounded-2xl border border-red-200 bg-red-50 p-4">
           <AlertTriangle className="size-5 text-red-500 shrink-0 mt-0.5" />
@@ -171,28 +152,6 @@ export default function ProductDetail() {
         </div>
       )}
 
-      {/* Caution warning: explains why product was flagged as caution */}
-      {safetyLevel === "caution" && highNutrients.length > 0 && (
-        <div className="flex gap-3 rounded-2xl border border-yellow-200 bg-yellow-50 p-4">
-          <ShieldAlert className="size-5 text-yellow-600 shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm font-semibold text-yellow-700">
-              High in some nutrients
-            </p>
-            <div className="mt-2 flex flex-wrap gap-1.5">
-              {highNutrients.map(([key]) => (
-                <span
-                  key={key}
-                  className="rounded-full bg-yellow-100 px-2.5 py-0.5 text-xs font-medium text-yellow-700">
-                  {nutrientLabels[key] ?? key}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* Nutrient levels */}
       {product.nutrient_levels && (
         <div className="rounded-2xl border border-border bg-surface p-5 shadow-card">
           <h2 className="mb-3 text-sm font-semibold text-text">
@@ -216,7 +175,6 @@ export default function ProductDetail() {
         </div>
       )}
 
-      {/* Ingredients */}
       {product.ingredients_text_en && (
         <div className="rounded-2xl border border-border bg-surface p-5 shadow-card">
           <h2 className="mb-2 text-sm font-semibold text-text">Ingredients</h2>

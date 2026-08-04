@@ -1,4 +1,3 @@
-// Holds the global favorites list and syncs it with localStorage.
 import React, { useEffect, useState } from "react";
 import type { Product } from "../types";
 import { FavoritesContext } from "./FavoritesContext";

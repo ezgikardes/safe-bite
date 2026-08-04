@@ -1,5 +1,3 @@
-// Custom hook to access the favorites context.
-// Throws if used outside a FavoritesProvider
 import { useContext } from "react";
 import { FavoritesContext } from "../context/FavoritesContext";
 

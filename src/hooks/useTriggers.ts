@@ -1,5 +1,3 @@
-// Custom hook to access the trigger context.
-// Throws if used outside a TriggerProvider
 import { useContext } from "react";
 import { TriggerContext } from "../context/TriggerContext";
 

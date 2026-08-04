@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { Home, Search, Heart, AlertTriangle, ScanLine } from "lucide-react";
 
-// Navigation menu items with routes, labels, and their corresponding icons
 const navItems = [
   { to: "/", label: "Home", icon: Home, end: true },
   { to: "/scan", label: "Scan", icon: ScanLine, end: false },
@@ -27,8 +26,6 @@ export default function Sidebar() {
             to={to}
             end={end}
             className={({ isActive }) =>
-              // Dynamic styling: active links show primary background with primary text color
-              // Inactive links show secondary text with hover effects
               `flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors ${
                 isActive
                   ? "bg-primary-light text-primary"

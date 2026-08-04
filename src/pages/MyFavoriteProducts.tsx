@@ -14,7 +14,6 @@ export default function MyFavoriteProducts() {
         </p>
       </div>
 
-      {/* Conditional rendering: Show empty state or product grid */}
       {myFavorites.length === 0 ? (
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-dashed border-border bg-surface py-12 text-center">
           <div className="rounded-full bg-primary-light p-3">
@@ -27,7 +26,6 @@ export default function MyFavoriteProducts() {
         </div>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-          {/* Render ProductCard for each favorite product */}
           {myFavorites.map((product) => (
             <ProductCard
               key={product.code}
