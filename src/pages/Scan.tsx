@@ -8,10 +8,8 @@ export default function Scan() {
   const [manualCode, setManualCode] = useState("");
   const [manualError, setManualError] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  // Keeps a reference to the scanner instance so it can be stopped during cleanup.
   const scannerRef = useRef<Html5Qrcode | null>(null);
 
-  // Start the camera scanner when the page mounts; stop it when the user leaves.
   useEffect(() => {
     const scanner = new Html5Qrcode("reader");
     scannerRef.current = scanner;
@@ -21,7 +19,6 @@ export default function Scan() {
         { facingMode: "environment" },
         { fps: 10, qrbox: { width: 250, height: 250 } },
         (decodedText) => {
-          // On successful scan: stop the camera and navigate to the product page.
           scanner.stop().then(() => navigate(`/product/${decodedText}`));
         },
         () => {
@@ -37,7 +34,6 @@ export default function Scan() {
     };
   }, [navigate]);
 
-  // Manual entry: validate barcode format, then navigate to the product route.
   function handleManualSubmit(e: { preventDefault: () => void }) {
     e.preventDefault();
     const code = manualCode.trim();
@@ -65,13 +61,11 @@ export default function Scan() {
           className="w-full h-full"
         />
 
-        {/* Corner guides overlay (purely decorative) */}
         <span className="pointer-events-none absolute left-6 top-6 size-8 rounded-tl-lg border-l-2 border-t-2 border-primary" />
         <span className="pointer-events-none absolute right-6 top-6 size-8 rounded-tr-lg border-r-2 border-t-2 border-primary" />
         <span className="pointer-events-none absolute bottom-6 left-6 size-8 rounded-bl-lg border-b-2 border-l-2 border-primary" />
         <span className="pointer-events-none absolute bottom-6 right-6 size-8 rounded-br-lg border-b-2 border-r-2 border-primary" />
 
-        {/* Error state covers the camera area if access fails */}
         {error && (
           <div className="absolute inset-0 flex items-center justify-center bg-surface p-6 text-center text-sm text-text-secondary">
             {error}
@@ -79,7 +73,6 @@ export default function Scan() {
         )}
       </div>
 
-      {/* Manual barcode entry */}
       <form
         onSubmit={handleManualSubmit}
         className="w-full space-y-3 rounded-xl border border-border bg-surface p-4">

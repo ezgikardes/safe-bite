@@ -1,8 +1,8 @@
+
 import { Fragment } from "react";
 import { Link } from "react-router-dom";
 import {
   ScanLine,
-  // ChevronRight,
   AlertTriangle,
   ShieldCheck,
   Heart,
@@ -12,8 +12,7 @@ const steps = [
   {
     icon: AlertTriangle,
     title: "Set your triggers",
-    description:
-      "Common reflux & gastritis triggers come built-in — add your own too.",
+    description: "Add the ingredients you want to avoid.",
   },
   {
     icon: ScanLine,
@@ -23,7 +22,7 @@ const steps = [
   {
     icon: ShieldCheck,
     title: "See if it's safe",
-    description: "Get an instant safe, caution, or risky badge.",
+    description: "Get an instant safe or risky badge.",
   },
   {
     icon: Heart,
@@ -35,7 +34,6 @@ const steps = [
 export default function Home() {
   return (
     <div className="space-y-6">
-      {/* Hero */}
       <div className="relative overflow-hidden rounded-2xl bg-primary px-10 py-12 text-white">
         <div className="relative z-10">
           <div className="pr-64">
@@ -66,7 +64,6 @@ export default function Home() {
         <div className="absolute right-4 top-4 size-40 rounded-full bg-white/5" />
       </div>
 
-      {/* How it works */}
       <div>
         <h2 className="mb-4 text-base font-semibold text-text">How it works</h2>
         <div className="flex flex-col gap-3 lg:flex-row lg:items-stretch lg:gap-0">
@@ -88,22 +85,6 @@ export default function Home() {
           ))}
         </div>
       </div>
-
-      {/* Recent Scans */}
-      {/* <div>
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="text-base font-semibold text-text">
-            Your Recent Scans
-          </h2>
-          <button className="flex items-center gap-1 text-sm text-primary hover:underline">
-            View all history
-            <ChevronRight className="size-4" />
-          </button>
-        </div>
-        <p className="text-sm text-text-secondary">
-          Scan a product to see your history here.
-        </p>
-      </div> */}
     </div>
   );
 }

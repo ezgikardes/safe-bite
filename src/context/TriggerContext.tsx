@@ -1,4 +1,3 @@
-// Defines the shape of the trigger context and creates it.
 import { createContext } from "react";
 
 interface TriggerContextType {

@@ -12,13 +12,11 @@ type ProductCardProps = {
 export default function ProductCard({ product }: ProductCardProps) {
   const emojiMap = {
     safe: "🟢 Safe",
-    caution: "🟡 Caution",
     risky: "🔴 Risky",
   };
 
   const { toggleFavorite, isFavorite } = useFavorites();
 
-  // State to track if product image failed to load
   const [imgError, setImgError] = useState(false);
 
   return (

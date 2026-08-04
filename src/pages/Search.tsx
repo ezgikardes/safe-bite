@@ -5,7 +5,6 @@ import ProductCard from "../components/ProductCard";
 import { Search as SearchIcon, Loader2 } from "lucide-react";
 
 export default function Search() {
-  // Get URL search params and extract initial search query if provided
   const [searchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState<string>(
     searchParams.get("q") ?? "",
@@ -14,7 +13,6 @@ export default function Search() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  // API function to search products by name using Open Food Facts API
   const searchProductsByName = async (query: string) => {
     const url = `/api/cgi/search.pl?search_terms=${encodeURIComponent(query)}&search_simple=1&action=process&json=1&fields=code,product_name,brands,image_front_url,ingredients_text_en,nutrient_levels`;
     const res = await fetch(url);
@@ -26,7 +24,6 @@ export default function Search() {
     return data;
   };
 
-  // Handle search action - validate input, call API, and manage state
   async function handleSearch() {
     if (!searchQuery.trim()) return;
     setIsLoading(true);
@@ -62,7 +59,6 @@ export default function Search() {
       <div className="flex gap-2">
         <div className="flex flex-1 items-center gap-2 rounded-xl border border-border bg-surface px-4 py-3 focus-within:border-primary transition-colors">
           <SearchIcon className="size-4 text-text-muted shrink-0" />
-          {/* Text input - food search on Enter or button click */}
           <input
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
@@ -73,7 +69,6 @@ export default function Search() {
             autoFocus
           />
         </div>
-        {/* Search button - disabled during loading */}
         <button
           onClick={() => handleSearch()}
           disabled={isLoading}
@@ -82,7 +77,6 @@ export default function Search() {
         </button>
       </div>
 
-      {/* Loading spinner displayed while searching */}
       {isLoading && (
         <div className="flex items-center gap-2 text-sm text-text-secondary">
           <Loader2 className="size-4 animate-spin" />
@@ -90,14 +84,12 @@ export default function Search() {
         </div>
       )}
 
-      {/* Error message displayed if search fails */}
       {error !== null && (
         <p className="rounded-xl border border-border bg-surface px-4 py-3 text-sm text-text-secondary">
           Something went wrong
         </p>
       )}
 
-      {/* Grid of product results - responsive layout from 2 to 4 columns */}
       {results.length > 0 && (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {results.map((product) => (
