@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# Local manual API test helpers (not committed)
+requests.http
+test-plan1.sh
