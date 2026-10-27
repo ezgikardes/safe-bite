@@ -5,7 +5,7 @@ export function getSafetyLevel(product: Product): "safe" | "risky" {
     localStorage.getItem("myTriggers") ?? "[]",
   );
 
-  const hasTrigger = customTriggers.some((trigger) =>
+  const hasTrigger = customTriggers.every((trigger) =>
     product.ingredients_text_en?.toLowerCase().includes(trigger),
   );
 
